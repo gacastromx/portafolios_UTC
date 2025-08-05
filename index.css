@@ -1,0 +1,393 @@
+*{
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 400; 
+    font-style: normal;
+    /* color: #b3b7ba */
+}
+
+body{
+    padding:0;
+    margin:0;
+    max-height: 100vh;
+}
+header{
+    width: 100%;
+    background-color: #27374D;
+    /* background-color: #6C698D; */
+    /* background-color: #010101; */
+    /* background-color: #312E2E; */
+    /* background-color: #090F15; */
+    height: 100vh;
+    display:flex;
+    flex-direction: column;
+    position:absolute;
+    transition: height 1s ease;
+}
+.cuerpoHeader{
+    /* margin:auto; */
+    position:absolute;
+    margin:auto;
+    top:10%;
+    left: 15%;
+    display:flex;
+    width: 65%;
+    height: 65%;
+    justify-content: center;
+    padding:1em;
+    gap:10px;
+    color: #D4D2D5;
+    flex-direction: column;
+    opacity: 1;
+    visibility: visible;
+    transition:opacity 1s linear;
+}
+.cabCuerpo{
+    display:flex;
+    /* background-color: red; */
+    flex-direction: row-reverse;
+    width: 100%;
+    margin: 0;
+    margin-bottom:auto;
+    justify-content: center;
+    border-bottom: 1px solid white;
+    padding-bottom:1em 
+}
+.imgPerfil{
+    width: 175px;
+    height: 175px;
+    border-radius: .5em;
+}
+.contImgP{
+    width: 25%;
+    display:flex;
+    justify-content: center;
+}
+.titulo{
+    width: 30%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+    /* background-color: blue; */
+}
+.nombteTit{
+    text-align: center;
+}
+.contRedes{
+    width: 90%;
+    margin-top:auto;
+    display: flex;
+    justify-content: center;
+    gap:50px;
+}
+.iconRed{
+    width: 40px;
+    fill: #D4D2D5;
+}
+.iconRed:hover{
+    fill: #eaf2f9;
+    transition: fill .5s ease;
+}
+.textPort{
+    width: 100%;
+    display:flex;
+    /* overflow-y: scroll; */
+    flex-direction: column;
+    margin: auto;
+    /* margin-bottom:100px; */
+    justify-content: center;
+    align-items: center;
+    line-height: 1.5;
+    font-size: 17px;
+}
+.textoPortada{
+    width: 95%;
+}
+
+.footerHeader{
+    display:flex;
+    flex-direction: row;
+    width: 97%;
+    justify-content: space-between;
+    align-items: center;
+    border-top:1px solid #6C698D;
+    margin:auto;
+    padding: 0 15px;
+    margin-bottom:0 ;
+    color: #DDE6ED;
+}
+.svgAbajo{
+    width: 25px;
+    fill: #98A1BC;
+}
+
+/* Siguientes estilos es para los contenedores de los proyectos. */
+main{
+    background-color: #6E6A6F;
+    height: 100vh;
+    
+}
+.contCuerpBody{
+    width: 80%;
+    height: 85%;
+    /* background-color: #D4D2D5; */
+    backdrop-filter: blur(8px);
+    position:absolute;
+    top:53%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    display:flex;
+    /* justify-content: space-around; */
+    flex-direction: row;
+    gap:20px
+}
+.contIzq, .contDer{
+    /* border:2px solid white; */
+    border-radius:1em;
+    /* background-color: #D4D2D5; */
+}
+
+/* Contenedor izquierdo */
+.contIzq{
+    width: 23%;
+}
+.seleccionCab{
+    display:flex;
+    flex-direction: column;
+    gap:10px;
+    padding:30px;
+    border: 1px solid white;
+    border-radius:.5em
+}
+select{
+    background-color:transparent;
+    border:none;
+    border-bottom: 1px solid black;
+    color:#bcbaba;
+    padding:3px;
+    font-size: 16px;
+    /* height: 2em; */
+    /* padding:5px */
+}
+.cuerpoIzq{
+    padding: 10px 30px;
+    margin-top:10px;
+    border-radius:.5em;
+    border:1px solid white
+}
+.descripcionL{
+    margin: 20px 0;
+}
+.experiencia{
+    display:flex;
+    flex-direction: row;
+    gap:10px
+}
+.svgStar{
+    width: 25px;
+}
+/* Contenedor derecho */
+.contDer{
+    width: 75%;
+    height: 15vh;
+    border: 2px solid white;
+}
+
+.cabTitulo{
+    padding:20px;
+    /* border:1px solid white ; */
+    justify-content: center;
+    text-align: center;
+}.cabTitulo p {
+    margin: 0 0 5px 0;
+}
+
+
+/* Media queries */
+/* Laptops */
+@media screen and (min-width:1025px) and (max-width: 1440px) {
+    .titulo{
+        display:flex;
+        width: 50%;
+        align-items: center;
+    }
+    .textoPortada{
+        font-size: 15px;
+    }
+    .textPort{
+        padding-top:130px;
+        overflow-y: scroll;
+        height: 50%;
+    }
+    .textPort::-webkit-scrollbar{
+        width: 0;
+    }
+}
+
+/* Tablets */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .cuerpoHeader{
+        width: 80%;
+    }
+    .titulo{
+        display:flex;
+        width: 60%;
+        align-items: center;
+    }
+    .textPort{
+        padding-top:220px;
+        overflow-y: scroll;
+        height: 50%;
+    }
+    .footerHeader{
+        padding: 0px;
+    }
+}
+
+/* Moviles grandes */
+@media screen and (min-width: 624px) and (max-width: 768px) {
+    .cuerpoHeader{
+        width: 85%;
+        top:7%;
+        left:6%;
+    }
+    .titulo{
+        display:flex;
+        width: 60%;
+        align-items: center;
+    }
+    .textPort{
+        padding-top:245px;
+        overflow-y: scroll;
+        height: 50%;
+    }
+    .footerHeader{
+        padding: 0px;
+    }
+}
+/* Moviles grandes 2*/
+@media screen and (min-width: 426px) and (max-width: 623px) {
+    .cuerpoHeader{
+        width: 85%;
+        top:7%;
+        left:6%;
+    }
+    .titulo{
+        display:flex;
+        width: 75%;
+        align-items: center;
+    }
+    .contImgP{
+    width: 25%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+    .imgPerfil{
+        width: 100px;
+        height: 100px;
+    }
+    .textPort{
+        padding-top:345px;
+        overflow-y: scroll;
+        height: 50%;
+    }
+    .footerHeader{
+        padding: 0px;
+    }
+}
+
+/* Telefonos mas pequeños 1 */
+@media screen and (min-width: 376px) and (max-width: 426px) {
+    .cuerpoHeader{
+        width: 85%;
+        top:7%;
+        left:5%;
+    }
+    .titulo{
+        display:flex;
+        width: 75%;
+        align-items: center;
+    }
+    .contImgP{
+    width: 25%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+    .imgPerfil{
+        width: 90px;
+        height: 90px;
+    }
+    .textPort{
+        padding-top:385px;
+        overflow-y: scroll;
+        height: 50%;
+    }
+    .footerHeader{
+        padding: 0px;
+    }
+}
+
+/* Telefonos mas pequeños 2 */
+@media screen and (min-width: 320px) and (max-width: 376px) {
+    .cuerpoHeader{
+        width: 95%;
+        position:relative;
+        /* height: 5vh; */
+        top:auto;
+        left:auto;
+        padding:85px 0 90px 0;
+    }
+    .titulo{
+        display:flex;
+        width: 70%;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .contImgP{
+    width: 25%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+    .imgPerfil{
+        width: 70px;
+        height: 70px;
+    }
+    .textPort{
+        padding-top:425px;
+        /* padding-bottom: 15px; */
+        margin-bottom: 10px;
+        overflow-y: scroll;
+        width: 95%;
+        height:15%;
+    }
+    .footerHeader{
+        padding: 0px;
+        background-color: #6C698D;
+        z-index: 2;
+    }
+}
+
+
+
+
+/* Clases de estado */
+.vuelta{
+    transform: rotate(3.142rad);
+    transition: transform 1s linear;
+}
+.ocultar{
+    opacity:0;
+    visibility: hidden;
+    transition:all 1s ease;
+}
+.reducir{
+    height: 8vh;
+    transition: height 1s ease;
+}
+.agrandar{
+    height: auto;
+    transition: height 1s ease;
+}
