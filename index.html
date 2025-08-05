@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Personal</title>
+    <link rel="stylesheet" href="./styles/estilos.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <h1>Mi Portafolio</h1>
+        <nav>
+            <ul>
+                <li><a href="#about">Sobre Mí</a></li>
+                <li><a href="#projects">Proyectos</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="about" class="about">
+        <h2>Sobre Mí</h2>
+        <p>¡Hola! Soy un desarrollador web apasionado por la creación de sitios web atractivos y funcionales. Me encanta
+            aprender nuevas tecnologías y aplicar mis conocimientos en proyectos desafiantes.</p>
+    </section>
+
+    <section id="projects" class="projects">
+        <h2>Proyectos</h2>
+        <div class="project-card">
+            <h3>Proyecto 1</h3>
+            <img src="proyecto1.jpg" alt="Imagen del Proyecto 1">
+            <p>Descripción del Proyecto 1.</p>
+        </div>
+        <div class="project-card">
+            <h3>Proyecto 2</h3>
+            <img src="proyecto2.jpg" alt="Imagen del Proyecto 2">
+            <p>Descripción del Proyecto 2.</p>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Contacto</h2>
+        <form>
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="message">Mensaje:</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+
+</body>
+
+</html>
