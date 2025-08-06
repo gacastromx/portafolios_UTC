@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Equipos API-Football</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            margin: 20px;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .search-form input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #dataContainer {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 5px;
+            min-height: 100px;
+            background-color: #fdfdfd;
+        }
+
+        pre {
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9em;
+            color: #2c3e50;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li.team-item {
+            padding: 12px 8px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        li.team-item:last-child {
+            border-bottom: none;
+        }
+
+        li.team-item img {
+            width: 40px;
+            /* Aumentamos tamaño para logos */
+            height: 40px;
+            /* Aumentamos tamaño para logos */
+            object-fit: contain;
+            /* Para que el logo no se deforme */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            /* Fondo blanco para logos transparentes */
+        }
+
+        .team-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .team-name {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .team-country,
+        .team-venue {
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #fbeae5;
+            border: 1px solid #e74c3c;
+            border-radius: 5px;
+        }
+
+        .api-message,
+        .info-message {
+            color: #e67e22;
+            /* Naranja para mensajes de la API que no son errores críticos */
+            font-weight: bold;
+            padding: 10px;
+            background-color: #fdf3e1;
+            border: 1px solid #e67e22;
+            border-radius: 5px;
+        }
+
+        .loading-message {
+            text-align: center;
+            color: #3498db;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Buscar Equipos de Fútbol</h1>
+        <div class="search-form">
+            <input type="text" id="teamNameInput" placeholder="Escribe el nombre del equipo...">
+            <button id="searchTeamBtn">Buscar Equipo</button>
+        </div>
+        <div id="dataContainer">
+            <p>Ingresa el nombre de un equipo y haz clic en "Buscar Equipo".</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('searchTeamBtn').addEventListener('click', searchTeam);
+        // Permitir búsqueda con Enter en el input
+        document.getElementById('teamNameInput').addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                searchTeam();
+            }
+        });
+
+        async function searchTeam() {
+            // ¡ADVERTENCIA IMPORTANTE SOBRE LA API KEY! (Misma advertencia que antes)
+            // Exponer tu API Key directamente en el código del lado del cliente (navegador)
+            // es un RIESGO DE SEGURIDAD MUY ALTO.
+            const apiKey = '69ff6027b190983c8bc3e5704c9bb144'; // Clave API proporcionada
+
+            const teamName = document.getElementById('teamNameInput').value;
+            const dataContainer = document.getElementById('dataContainer');
+
+            if (!teamName.trim()) {
+                dataContainer.innerHTML = '<p class="info-message">Por favor, ingresa un nombre de equipo para buscar.</p>';
+                return;
+            }
+
+            // Endpoint para buscar equipos. El parámetro es 'search'.
+            const apiUrl = `https://v3.football.api-sports.io/teams?search=${encodeURIComponent(teamName.trim())}`;
+
+            dataContainer.innerHTML = '<p class="loading-message">Buscando equipos...</p>';
+
+            const headers = {
+                'x-rapidapi-host': 'v3.football.api-sports.io',
+                'x-rapidapi-key': apiKey
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: headers
+                });
+
+                const responseText = await response.text();
+
+                if (!response.ok) {
+                    let errorData = { message: `Error HTTP ${response.status}` };
+                    try {
+                        errorData = JSON.parse(responseText);
+                    } catch (e) {
+                        errorData.details = responseText || response.statusText;
+                    }
+                    const errorMessage = errorData.message || (errorData.errors && Object.values(errorData.errors).join(', ')) || errorData.details || 'Error desconocido al obtener los datos';
+                    throw new Error(`Error ${response.status}: ${errorMessage}`);
+                }
+
+                const data = JSON.parse(responseText);
+
+                if (data.response && data.response.length > 0) {
+                    let htmlContent = `<h2>Resultados para "${teamName}":</h2><ul>`;
+                    data.response.forEach(item => { // Cada 'item' contiene 'team' y 'venue'
+                        const team = item.team;
+                        const venue = item.venue;
+                        htmlContent += `<li class="team-item">
+                                            <img src="${team.logo || ''}" alt="Logo de ${team.name}" onerror="this.style.display='none'; this.parentElement.querySelector('.no-logo-placeholder')?.remove();"/>
+                                            <div class="team-info">
+                                                <span class="team-name">${team.name || 'Nombre no disponible'}</span>
+                                                <span class="team-country">País: ${team.country || 'N/A'} ${team.national ? '(Selección Nacional)' : ''}</span>
+                                                ${venue ? `<span class="team-venue">Estadio: ${venue.name || 'N/A'} (Ciudad: ${venue.city || 'N/A'})</span>` : '<span class="team-venue">Estadio: N/A</span>'}
+                                            </div>
+                                        </li>`;
+                    });
+                    htmlContent += '</ul>';
+                    dataContainer.innerHTML = htmlContent;
+                } else if (data.results === 0) { // API-Football a veces devuelve 'results: 0'
+                    dataContainer.innerHTML = `<p class="info-message">No se encontraron equipos que coincidan con "${teamName}". Intenta con otro nombre.</p>`;
+                } else if (data.errors && (Array.isArray(data.errors) ? data.errors.length > 0 : Object.keys(data.errors).length > 0)) {
+                    let errorMessages = '<h3>Errores de la API:</h3><ul>';
+                    if (Array.isArray(data.errors) && typeof data.errors[0] === 'string') {
+                        data.errors.forEach(err => { errorMessages += `<li>${err}</li>`; });
+                    } else if (typeof data.errors === 'object') {
+                        for (const key in data.errors) {
+                            errorMessages += `<li><strong>${key}:</strong> ${data.errors[key]}</li>`;
+                        }
+                    } else {
+                        errorMessages += `<li>Error desconocido en la respuesta de la API.</li>`;
+                    }
+                    errorMessages += '</ul>';
+                    dataContainer.innerHTML = `<div class="api-message">${errorMessages}</div>`;
+                } else if (data.message) {
+                    dataContainer.innerHTML = `<div class="api-message"><p>Mensaje de la API: ${data.message}</p><pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+                }
+                else {
+                    dataContainer.innerHTML = `<p class="info-message">No se encontraron equipos o la respuesta no tuvo el formato esperado para "${teamName}".</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+                console.log('Respuesta completa de la API (equipos):', data);
+
+            } catch (error) {
+                console.error('Error detallado en la solicitud fetch:', error);
+                dataContainer.innerHTML = `<div class="error-message">
+                                               <p><b>Error al buscar equipos: ${error.message}</b></p>
+                                               <p><b>Posibles causas y soluciones:</b></p>
+                                               <ul>
+                                                   <li><b>Problema de CORS:</b> El navegador podría estar bloqueando la solicitud. Considera usar un backend (proxy) para producción.</li>
+                                                   <li><b>API Key inválida o con problemas:</b> Verifica tu API Key (termina en ...${apiKey.slice(-4)}) y tu suscripción en API-Football.</li>
+                                                   <li><b>Límite de solicitudes excedido.</b></li>
+                                                   <li><b>Problemas de red.</b></li>
+                                               </ul>
+                                               <p>Revisa la consola del navegador (F12) para más detalles.</p>
+                                           </div>`;
+            }
+        }
+    </script>
+</body>
+
+</html>
